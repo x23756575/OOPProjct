@@ -15,6 +15,7 @@ public class TypingApp {
     
     private JLabel[][] keyboardLabels; // To store keyboard keys as image labels
     
+<<<<<<< HEAD
     // Constructor
     TypingLogic tl = new TypingLogic(); 
     public TypingApp(MainGUI mp) {
@@ -39,6 +40,26 @@ public class TypingApp {
                 String fileName = keyboardLayout[row][col]; // Get the file name
                 keyboardLabels[row][col] = createLabel(fileName); // Store label in the array
             }
+=======
+    private MainGUI mp;
+    private String label;
+    private ArrayList<JButton> listButtons;
+    private int width, height;
+
+    // Constructor
+    public TypingApp(MainGUI mp){
+        this.mp = mp;
+        listButtons = new ArrayList<>(); 
+        
+        // Array of button names
+        String[] buttonNames = {"Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", 
+                                 "A", "S", "D", "F", "G", "H", "J", "K", "L", "Z", 
+                                 "X", "C", "V", "B", "N", "M"};
+        
+        // Create and add buttons to the list
+        for(String buttonName : buttonNames){
+            createButtons(buttonName);
+>>>>>>> 54b4caf2db5b0bad217a6ae7e042b3ee143cbcde
         }
        // Create TypingLogic instance
  // Get the random sentence as a JLabel
@@ -53,6 +74,7 @@ public class TypingApp {
        keyboardLayout();
     }
 
+<<<<<<< HEAD
 
     // Method to create a JLabel with an image
     private JLabel createLabel(String fileName) {
@@ -126,4 +148,35 @@ public class TypingApp {
         gameJPanel.revalidate();
         gameJPanel.repaint();
     }
+=======
+    private void createButtons(String label){
+        this.label = label;
+        
+        // Create a new button and set its text
+        JButton button = new JButton(label);
+        
+        // Add the button to the list
+        listButtons.add(button);
+    }
+
+    // Method to lay out the buttons on the panel
+    public void keyboardLayout(){
+        JPanel gameJPanel = mp.getGameJPanel();
+        
+        // Set a layout manager for the panel
+        gameJPanel.setLayout(new FlowLayout());
+        
+        // Add each button from the list to the panel
+        for(JButton button : listButtons){
+            gameJPanel.add(button);
+        }
+        
+        gameJPanel.revalidate();
+        gameJPanel.repaint();
+    }
+
+    public String getLabel(){
+        return label;
+    }
+>>>>>>> 54b4caf2db5b0bad217a6ae7e042b3ee143cbcde
 }

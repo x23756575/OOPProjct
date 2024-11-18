@@ -6,7 +6,7 @@ package MainApp;
 
 /**
  *
- * @author tekuboii
+ * @author temuulen
  */
 public class MainApp {
 
@@ -17,6 +17,8 @@ public class MainApp {
         // TODO code application logic here
         MainGUI gui = new MainGUI();
         TypingApp typingApp = new TypingApp(gui);
+        QuizApp quizApp = new QuizApp(gui);
+        InfoApp infoApp = new InfoApp(gui);
         gui.setVisible(true);
     }
      
