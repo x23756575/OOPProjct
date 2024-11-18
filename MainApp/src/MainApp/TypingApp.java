@@ -7,15 +7,15 @@ import java.awt.FlowLayout;
 
 public class TypingApp {
     
-    private MainGUI mp;  // Reference to MainGUI
+    private MainGUI mp;
     private String label;
-    private ArrayList<JButton> listButtons;  // List to store buttons
+    private ArrayList<JButton> listButtons;
     private int width, height;
 
     // Constructor
     public TypingApp(MainGUI mp){
-        this.mp = mp;  // Use the passed MainGUI reference
-        listButtons = new ArrayList<>();  // Initialize the button list
+        this.mp = mp;
+        listButtons = new ArrayList<>(); 
         
         // Array of button names
         String[] buttonNames = {"Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", 
@@ -31,9 +31,8 @@ public class TypingApp {
         keyboardLayout();
     }
 
-    // Method to create a button and add it to the list
     private void createButtons(String label){
-        this.label = label;  // Set the button label
+        this.label = label;
         
         // Create a new button and set its text
         JButton button = new JButton(label);
@@ -44,22 +43,20 @@ public class TypingApp {
 
     // Method to lay out the buttons on the panel
     public void keyboardLayout(){
-        JPanel gameJPanel = mp.getGameJPanel();  // Get the game panel from MainGUI
+        JPanel gameJPanel = mp.getGameJPanel();
         
         // Set a layout manager for the panel
-        gameJPanel.setLayout(new FlowLayout());  // Use FlowLayout for a simple horizontal layout
+        gameJPanel.setLayout(new FlowLayout());
         
         // Add each button from the list to the panel
         for(JButton button : listButtons){
             gameJPanel.add(button);
         }
         
-        // Revalidate and repaint the panel to ensure it updates
         gameJPanel.revalidate();
         gameJPanel.repaint();
     }
 
-    // Getter for the label (not used currently, but left in case it's needed)
     public String getLabel(){
         return label;
     }
