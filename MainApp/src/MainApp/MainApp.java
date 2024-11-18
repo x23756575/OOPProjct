@@ -19,5 +19,5 @@ public class MainApp {
         TypingApp typingApp = new TypingApp(gui);
         gui.setVisible(true);
     }
-    
+     
 }

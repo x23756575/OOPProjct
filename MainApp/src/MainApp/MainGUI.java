@@ -13,9 +13,6 @@ import javax.swing.JPanel;
 
 public class MainGUI extends javax.swing.JFrame {
 
-    /**
-     * Creates new form NewJFrame
-     */
     
     public MainGUI() {
         initComponents();
