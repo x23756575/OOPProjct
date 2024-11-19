@@ -19,6 +19,8 @@ public class MainGUI extends javax.swing.JFrame {
     
     public MainGUI() {
         initComponents();
+        gameJPanel.setBackground(new java.awt.Color(51, 204, 255));
+        
     }
     public JPanel getGameJPanel() {
         return gameJPanel;
