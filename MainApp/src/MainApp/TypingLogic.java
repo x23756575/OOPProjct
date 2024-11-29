@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Arrays;
 import java.util.Random;
 import javax.swing.JLabel;
 import javax.swing.Timer;
@@ -20,7 +21,9 @@ public class TypingLogic implements KeyListener{
     private Timer timer;
     private String currentText; 
     private JLabel label;
-
+    private String counterWords;
+    private int counter;
+    
     StringBuilder userInput = new StringBuilder();
     StringBuilder newText = new StringBuilder("<html>");
     
@@ -50,15 +53,79 @@ public class TypingLogic implements KeyListener{
                 time.setText(String.valueOf(count));
                 if (count <= 0) {
             ((Timer) e.getSource()).stop();
+
+// Clean user input and label text
+String cleanedUserInput = stripHtml(userInput.toString()).toLowerCase(); // Strip HTML and convert to lowercase
+String cleanedDisplayedText = stripHtml(label.getText()).toLowerCase(); // Strip HTML and convert to lowercase
+
+// Debug: Print cleaned text
+System.out.println("Cleaned User Input: " + cleanedUserInput);
+System.out.println("Cleaned Displayed Text: " + cleanedDisplayedText);
+
+// Split cleaned text into words
+String[] correctWords = cleanedUserInput.split("\\s+");
+String[] labelWords = cleanedDisplayedText.split("\\s+");
+
+// Debug: Print split arrays
+System.out.println("Correct Words (User Input): " + Arrays.toString(correctWords));
+System.out.println("Label Words (Displayed Text): " + Arrays.toString(labelWords));
+
+
+int correctMatches = 0;
+int mistakes = 0;
+
+for (int i = 0; i < labelWords.length; i++) {
+    if (i < correctWords.length) {
+        if (labelWords[i].equals(correctWords[i])) {
+            correctMatches++;
+            System.out.println("Match found at index " + i + ": " + correctWords[i]);
+        } else {
+            mistakes++;
+            System.out.println("Mistake at index " + i + ": " + correctWords[i] + " != " + labelWords[i]);
+        }
+    } else {
+        mistakes++;
+        System.out.println("Missing word at index " + i + ": " + labelWords[i]);
+    }
+}
+
+// Count extra words in user input
+if (correctWords.length > labelWords.length) {
+    for (int i = labelWords.length; i < correctWords.length; i++) {
+        mistakes++;
+        System.out.println("Extra word at index " + i + ": " + correctWords[i]);
+    }
+}
+
+// Print results
+System.out.println("Correct Matches: " + correctMatches);
+System.out.println("Mistakes: " + mistakes);
+
+
+
+
+            
+            label.setText("");
+            
             loopTest();
                 }
             }
         });
 
 
+
         gameJPanel.revalidate();
         gameJPanel.repaint();
     }
+public static String stripHtml(String html) {
+    if (html == null) {
+        return "";
+    }
+    // Regex to remove all HTML tags
+    return html.replaceAll("<[^>]*>", "").trim();
+}
+
+
 
     // Method to get a random sentence as JLabel
     public JLabel typingText(){
@@ -96,6 +163,8 @@ public class TypingLogic implements KeyListener{
         return label;
 
     }
+    
+    
 public void loopTest() {
     timer.stop(); // Stop the timer
     count = 10;   // Reset the countdown
@@ -116,9 +185,11 @@ public void loopTest() {
     label.setText(newText.toString()); // Update the label text
     mp.getGameJPanel().add(label);
     pressed = false; // Reset the pressed flag
-label.setFont(new Font("arial", Font.BOLD, 20));
-label.setBounds(270, 100, 900, 50); // Adjust as necessary
-mp.getGameJPanel().add(label);
+    label.setFont(new Font("arial", Font.BOLD, 20));
+    label.setBounds(270, 100, 900, 50); // Adjust as necessary
+    mp.getGameJPanel().add(label);
+
+
 
 }
     
@@ -165,8 +236,6 @@ public void keyTyped(KeyEvent e) {
                    .append("</span>");
         }
     }
-
-
     newText.append("</html>");
 
     // Update the label with the new colored HTML text
