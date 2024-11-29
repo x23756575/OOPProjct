@@ -54,21 +54,14 @@ public class TypingLogic implements KeyListener{
                 if (count <= 0) {
             ((Timer) e.getSource()).stop();
 
-// Clean user input and label text
-String cleanedUserInput = stripHtml(userInput.toString()).toLowerCase(); // Strip HTML and convert to lowercase
-String cleanedDisplayedText = stripHtml(label.getText()).toLowerCase(); // Strip HTML and convert to lowercase
-
-// Debug: Print cleaned text
-System.out.println("Cleaned User Input: " + cleanedUserInput);
-System.out.println("Cleaned Displayed Text: " + cleanedDisplayedText);
+String cleanedUserInput = stripHtml(userInput.toString()).toLowerCase(); 
+String cleanedDisplayedText = stripHtml(label.getText()).toLowerCase(); // i needed to strip html to clear the html tags in stringbuilder 
+                                                                        //because it was interfering with my logic when matching random sentence and user entered sentences
 
 // Split cleaned text into words
 String[] correctWords = cleanedUserInput.split("\\s+");
-String[] labelWords = cleanedDisplayedText.split("\\s+");
+String[] labelWords = cleanedDisplayedText.split("\\s+"); // splits words by spaces used to match word to words
 
-// Debug: Print split arrays
-System.out.println("Correct Words (User Input): " + Arrays.toString(correctWords));
-System.out.println("Label Words (Displayed Text): " + Arrays.toString(labelWords));
 
 
 int correctMatches = 0;
@@ -99,13 +92,9 @@ if (correctWords.length > labelWords.length) {
 
 // Print results
 System.out.println("Correct Matches: " + correctMatches);
-System.out.println("Mistakes: " + mistakes);
+System.out.println("Mistakes: " + mistakes); //i used this to check if the matching was correct
 
-
-
-
-            
-            label.setText("");
+            label.setText(""); //clears the labels text when the test is done
             
             loopTest();
                 }
@@ -121,7 +110,7 @@ public static String stripHtml(String html) {
     if (html == null) {
         return "";
     }
-    // Regex to remove all HTML tags
+    // Regex to remove all html tags
     return html.replaceAll("<[^>]*>", "").trim();
 }
 
@@ -172,7 +161,7 @@ public void loopTest() {
     currentText = typingText().getText(); // Get a new random sentence
     userInput.setLength(0); // Clear the user input
 
-    // Build the new HTML for the fresh sentence
+    // clear for next sentence
     newText.setLength(0);
     newText.append("<html>");
     for (int i = 0; i < currentText.length(); i++) {
@@ -207,12 +196,11 @@ public void loopTest() {
 public void keyTyped(KeyEvent e) {
     char key = e.getKeyChar();
 
-    // Append the typed character to userInput
     if (userInput.length() < currentText.length()) {
         userInput.append(key);
     }
 
-    // Clear the newText builder for fresh HTML construction
+    // Clear the newText stringbuilder
     newText.setLength(0);
     newText.append("<html>");
 
@@ -224,13 +212,11 @@ public void keyTyped(KeyEvent e) {
                        .append(currentText.charAt(i))
                        .append("</span>");
             } else {
-                // Incorrectly typed character
                 newText.append("<span style='color:red;'>")
                        .append(currentText.charAt(i))
                        .append("</span>");
             }
         } else {
-            // Untyped characters in black
             newText.append("<span style='color:black;'>")
                    .append(currentText.charAt(i))
                    .append("</span>");
