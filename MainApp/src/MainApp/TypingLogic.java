@@ -8,6 +8,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Arrays;
 import java.util.Random;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.Timer;
 import javax.swing.JPanel;
@@ -25,6 +26,11 @@ public class TypingLogic implements KeyListener{
     private int counter;
     private int numberOfWords;
     private int correctMatches;
+    private JLabel wpm;
+    private int tempCount;
+    private int calcTimeForWpm;
+    private boolean textPicked = false;
+
     
     StringBuilder userInput = new StringBuilder();
     StringBuilder newText = new StringBuilder("<html>");
@@ -39,14 +45,20 @@ public class TypingLogic implements KeyListener{
         //I was able to figure setFocusable(true) was necessary as the gameJPanel needed focus form keybaord inputs
         mp.addKeyListener(this);
         mp.setFocusTraversalKeysEnabled(false);
-
         
+        timerButtons();   
         JLabel time = new JLabel(String.valueOf(count));
-        time.setBounds(50, 50, 100, 30);
+        time.setBounds(750, 60, 100, 100);
+        time.setFont(new Font("arial", Font.BOLD, 50));
         gameJPanel.add(time);
-        System.out.println("Panel is focusable: " + gameJPanel.isFocusable());
-        JLabel typingLabel = typingText(); // Get the JLabel with random text
-        currentText = typingLabel.getText();
+        
+        label = typingText(); 
+        currentText = label.getText();
+
+        wpm = new JLabel("WPM: ");
+        wpm.setFont(new Font("arial", Font.BOLD, 20));
+        wpm.setBounds(40, 200, 150, 30);
+        gameJPanel.add(wpm);
 
         timer = new Timer(1000, new ActionListener() {
             @Override
@@ -108,11 +120,9 @@ System.out.println("Mistakes: " + mistakes); //i used this to check if the match
                 }
             }
         });
-
-
-
         gameJPanel.revalidate();
         gameJPanel.repaint();
+
     }
 public static String stripHtml(String html) {
     if (html == null) {
@@ -126,6 +136,11 @@ public static String stripHtml(String html) {
 
     // Method to get a random sentence as JLabel
     public JLabel typingText(){
+        System.out.println("ssjnksj");
+          if (textPicked) {
+        System.out.println("typingText() prevented: Already initialized.");
+        return label; // Return existing label
+    }
         String[] sentences = {
     "the quick brown fox jumped over the lazy dog",
     "the rain in spain falls mainly on the plain",
@@ -163,9 +178,10 @@ public static String stripHtml(String html) {
     
     
 public void loopTest() {
+    System.out.println("loopTest method");// using this to debug a problem that causes text to change at the start
     timer.stop(); // Stop the timer
     count = 10;   // Reset the countdown
-    
+    textPicked = false;
     currentText = typingText().getText(); // Get a new random sentence
     userInput.setLength(0); // Clear the user input
 
@@ -183,13 +199,78 @@ public void loopTest() {
     mp.getGameJPanel().add(label);
     pressed = false; // Reset the pressed flag
     label.setFont(new Font("arial", Font.BOLD, 20));
-    label.setBounds(270, 100, 900, 50); // Adjust as necessary
+    label.setBounds(270, 100, 900, 50);
+    wpm = new JLabel("WPM: ");
+    wpm.setText("WPM: ");
     mp.getGameJPanel().add(label);
-
 
 
 }
     
+public void timerButtons(){
+    
+    TimerButtons text = new TimerButtons("Select your time below");
+    
+    TimerButtons ten = new TimerButtons("10");
+    TimerButtons twenty = new TimerButtons("20");
+    TimerButtons thirty = new TimerButtons("30");
+    
+    ten.setFont(new Font("arial", Font.BOLD,10));
+    twenty.setFont(new Font("arial", Font.BOLD, 10));
+    thirty.setFont(new Font("arial", Font.BOLD, 10));
+    
+    text.setPositionAndSize(350, 5, 170, 30);
+    ten.setPositionAndSize(320,50,50,50);
+    twenty.setPositionAndSize(400,50,50,50);
+    thirty.setPositionAndSize(480,50,50,50);
+    
+
+    
+ten.addActionListener(new ActionListener() {
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        count = 10;
+        timer.stop();
+        timer.start();
+        
+        // Request focus back to MainGUI
+        mp.requestFocusInWindow();
+    }
+});
+
+twenty.addActionListener(new ActionListener() {
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        count = 20;
+        timer.stop();
+        timer.start();
+        
+        // Request focus back to MainGUI
+        mp.requestFocusInWindow();
+    }
+});
+
+thirty.addActionListener(new ActionListener() {
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        count = 30;
+        timer.stop();
+        timer.start();
+        
+        // Request focus back to MainGUI
+        mp.requestFocusInWindow();
+    }
+});
+
+
+    mp.getGameJPanel().add(text);
+    mp.getGameJPanel().add(ten);
+    mp.getGameJPanel().add(twenty);
+    mp.getGameJPanel().add(thirty);
+    mp.getGameJPanel().revalidate();
+    mp.getGameJPanel().repaint();
+   
+}
     
     
     
@@ -208,11 +289,12 @@ public void keyTyped(KeyEvent e) {
         userInput.append(key);
     }
 
-    // Clear the newText stringbuilder
-    newText.setLength(0);
-    newText.append("<html>");
 
-    for (int i = 0; i < currentText.length(); i++) {
+
+    newText.setLength(0);// this clear the newText stringbuilder
+    newText.append("<html>");// used to interpret text as html text so i can style it
+
+    for (int i = 0; i < currentText.length(); i++) {//for loop used to loop through userinput text and checks if its correct - changes to green vice versa
         if (i < userInput.length()) {
             // Correctly typed character
             if (currentText.charAt(i) == userInput.charAt(i)) {
@@ -232,29 +314,29 @@ public void keyTyped(KeyEvent e) {
     }
     newText.append("</html>");
 
-    // Update the label with the new colored HTML text
-    label.setText(newText.toString());
+    label.setText(newText.toString());//sets the text to a label to be displayed
     timer.start();
 
 }
 
         @Override
-        public void keyReleased(KeyEvent e) {
+        public void keyReleased(KeyEvent e) {//redundant but i have to have it here otherwise errors
         }
 @Override
 public void keyPressed(KeyEvent e) {
     System.out.println("Key pressed: " + e.getKeyCode());
-    if (userInput.length() == currentText.length() && e.getKeyCode() == KeyEvent.VK_TAB) {
-        System.out.println("Tab key pressed. Triggering result processing.");
+    if (e.getKeyCode() == KeyEvent.VK_TAB) {
+        tempCount = count; // i created a simple formula to calculate wpm by setting a temp variaable to hold the timer value when tab is clicked(ends the typing test)
+        calcTimeForWpm = 60/tempCount;// 60 is divided by the timer value to find the multiplier to calculate the wpm.
+        System.out.println("Tab key pressed. Triggering result processing."); //.. i used this method because i cant just multiply by 6 in a 10 second test 
+                                                                              //if they finish the test early as results would be false. *6 would only work if they completed the full 10 seconds.
 
-        // Debug the cleaned strings
-        String cleanedUserInput = stripHtml(userInput.toString().trim().toLowerCase());
+        String cleanedUserInput = stripHtml(userInput.toString().trim().toLowerCase());// i used this method to get rid of html tags when appending, i found this method online by researching and it works effectively
         String cleanedDisplayedText = stripHtml(currentText.trim().toLowerCase());
-        System.out.println("Cleaned User Input: " + cleanedUserInput);
-        System.out.println("Cleaned Displayed Text: " + cleanedDisplayedText);
 
-        String[] correctWords = cleanedUserInput.split("\\s+");
-        String[] labelWords = cleanedDisplayedText.split("\\s+");
+
+        String[] correctWords = cleanedUserInput.split("\\s+");// seperates by spaces to seperate wordds
+        String[] labelWords = cleanedDisplayedText.split("\\s+");// i still have an issue to fix if they type a word where a space should be, but i will do that later on
 
         correctMatches = 0;
         int mistakes = 0;
@@ -284,15 +366,17 @@ public void keyPressed(KeyEvent e) {
 
         // Calculate WPM
         if (correctMatches > 0) {
-            numberOfWords = correctMatches * 6;
+            numberOfWords = correctMatches * calcTimeForWpm;
         } else {
             numberOfWords = 0;
         }
-        System.out.println("Final WPM: " + numberOfWords);
+            wpm.setText("WPM: " + numberOfWords);
             label.setText("");
-        loopTest();
+            loopTest();
+            
     }
 }
+
 
 }
 
