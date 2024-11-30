@@ -23,6 +23,8 @@ public class TypingLogic implements KeyListener{
     private JLabel label;
     private String counterWords;
     private int counter;
+    private int numberOfWords;
+    private int correctMatches;
     
     StringBuilder userInput = new StringBuilder();
     StringBuilder newText = new StringBuilder("<html>");
@@ -60,11 +62,11 @@ String cleanedDisplayedText = stripHtml(label.getText()).toLowerCase(); // i nee
 
 // Split cleaned text into words
 String[] correctWords = cleanedUserInput.split("\\s+");
-String[] labelWords = cleanedDisplayedText.split("\\s+"); // splits words by spaces used to match word to words
+String[] labelWords = cleanedDisplayedText.split("\\s+"); // splits words by spaces used to match word to word
 
 
 
-int correctMatches = 0;
+correctMatches = 0;
 int mistakes = 0;
 
 for (int i = 0; i < labelWords.length; i++) {
@@ -89,6 +91,12 @@ if (correctWords.length > labelWords.length) {
         System.out.println("Extra word at index " + i + ": " + correctWords[i]);
     }
 }
+//WPM
+
+    numberOfWords = correctMatches * 6;
+    System.out.println("WPM "+ numberOfWords);
+
+
 
 // Print results
 System.out.println("Correct Matches: " + correctMatches);
@@ -233,17 +241,59 @@ public void keyTyped(KeyEvent e) {
         @Override
         public void keyReleased(KeyEvent e) {
         }
+@Override
+public void keyPressed(KeyEvent e) {
+    System.out.println("Key pressed: " + e.getKeyCode());
+    if (userInput.length() == currentText.length() && e.getKeyCode() == KeyEvent.VK_TAB) {
+        System.out.println("Tab key pressed. Triggering result processing.");
 
-    @Override
-    public void keyPressed(KeyEvent e) {
-          if(userInput.length() == currentText.length()){
-        if(e.getKeyCode() == KeyEvent.VK_TAB){
-            System.out.println("tab");
-            label.setText("");
-       loopTest();
+        // Debug the cleaned strings
+        String cleanedUserInput = stripHtml(userInput.toString().trim().toLowerCase());
+        String cleanedDisplayedText = stripHtml(currentText.trim().toLowerCase());
+        System.out.println("Cleaned User Input: " + cleanedUserInput);
+        System.out.println("Cleaned Displayed Text: " + cleanedDisplayedText);
+
+        String[] correctWords = cleanedUserInput.split("\\s+");
+        String[] labelWords = cleanedDisplayedText.split("\\s+");
+
+        correctMatches = 0;
+        int mistakes = 0;
+
+        for (int i = 0; i < labelWords.length; i++) {
+            if (i < correctWords.length) {
+                if (labelWords[i].equals(correctWords[i])) {
+                    correctMatches++;
+                    System.out.println("Match found at index " + i + ": " + correctWords[i]);
+                } else {
+                    mistakes++;
+                    System.out.println("Mistake at index " + i + ": " + correctWords[i] + " != " + labelWords[i]);
+                }
+            } else {
+                mistakes++;
+                System.out.println("Missing word at index " + i + ": " + labelWords[i]);
+            }
         }
+
+        // Count extra words
+        if (correctWords.length > labelWords.length) {
+            for (int i = labelWords.length; i < correctWords.length; i++) {
+                mistakes++;
+                System.out.println("Extra word at index " + i + ": " + correctWords[i]);
+            }
+        }
+
+        // Calculate WPM
+        if (correctMatches > 0) {
+            numberOfWords = correctMatches * 6;
+        } else {
+            numberOfWords = 0;
+        }
+        System.out.println("Final WPM: " + numberOfWords);
+            label.setText("");
+        loopTest();
     }
-    }
+}
+
 }
 
 
