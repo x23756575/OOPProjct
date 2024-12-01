@@ -18,7 +18,10 @@ public class InfoContent extends JPanel {
     private JTextArea displayArea;
     private JLabel imageLabel;
     private JTextArea introArea;  
-
+    
+    String getInfo() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
     public InfoContent() {
         setLayout(new BorderLayout());
         setPreferredSize(new Dimension(900, 900)); // Fixed size for the content panel
@@ -154,14 +157,9 @@ public class InfoContent extends JPanel {
     }
 
     void setInfo(String text) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+      }
 
     void loadInfoFromFile() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    String getInfo() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 }
