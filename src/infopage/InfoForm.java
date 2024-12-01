@@ -26,49 +26,49 @@ public class InfoForm extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null); // Center the window
 
-        InfoContent infoContentPanel = new InfoContent();
-        add(infoContentPanel, BorderLayout.CENTER);
+        InfoContent contentPanel = new InfoContent();
+        add(contentPanel, BorderLayout.CENTER);
 
         // Panel for Bottom buttons: Home, Info Home, Suggest an Edit
-        JPanel bottomButtonPanel = new JPanel();
-        bottomButtonPanel.setLayout(new FlowLayout());  // Align buttons horizontally
-        JButton homeButton = new JButton("Home");
-        JButton infoHomeButton = new JButton("Information Home");
-        JButton changeButton = new JButton("Suggest an Edit");
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.setLayout(new FlowLayout());  // Align buttons horizontally
+        JButton homeBtn = new JButton("Home");
+        JButton infoHomeBtn = new JButton("Information Home");
+        JButton changeBtn = new JButton("Suggest an Edit");
 
         // Set button sizes
-        homeButton.setPreferredSize(new Dimension(150, 40));
-        infoHomeButton.setPreferredSize(new Dimension(150, 40));
-        changeButton.setPreferredSize(new Dimension(150, 40));
+        homeBtn.setPreferredSize(new Dimension(150, 40));
+        infoHomeBtn.setPreferredSize(new Dimension(150, 40));
+        changeBtn.setPreferredSize(new Dimension(150, 40));
 
         // ActionListeners for buttons
-        homeButton.addActionListener(new ActionListener() {
+        homeBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Navigating to MainApp (Home)...");
+                System.out.println("Navigating to MainApp (Home)..."); 
                 showHomePage();
             }
         });
 
-        infoHomeButton.addActionListener(new ActionListener() {
+        infoHomeBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Navigating to Information Home...");
                 showInformationHomePage();
             }
         });
 
-        changeButton.addActionListener(new ActionListener() {
+        changeBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Suggesting a change..."); // Still under development, testing
+                System.out.println("Suggesting a change..."); 
             }
         });
 
         // Add buttons to the panel
-        bottomButtonPanel.add(homeButton);
-        bottomButtonPanel.add(infoHomeButton);
-        bottomButtonPanel.add(changeButton);
+        bottomPanel.add(homeBtn);
+        bottomPanel.add(infoHomeBtn);
+        bottomPanel.add(changeBtn);
 
         // Add the panel at the bottom of the frame
-        add(bottomButtonPanel, BorderLayout.SOUTH);
+        add(bottomPanel, BorderLayout.SOUTH);
 
         setVisible(true);
     }
@@ -77,7 +77,7 @@ public class InfoForm extends JFrame {
         new InfoForm();  
     }
 
-    // Method to handle button actions
+    // Methods to handle button actions
     private void showHomePage() {
         System.out.println("Displaying Home Page...");
     }
@@ -86,3 +86,4 @@ public class InfoForm extends JFrame {
         System.out.println("Displaying Information Home...");
     }
 }
+
