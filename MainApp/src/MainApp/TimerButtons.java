@@ -12,7 +12,7 @@ import javax.swing.JButton;
  */
 public class TimerButtons extends JButton {
     
-    public TimerButtons(String text) {
+    public TimerButtons(String text) { //parent class i will use for timer buttons
         super(text);
     }
 

@@ -72,7 +72,7 @@ public class TypingLogic implements KeyListener{
     String cleanedDisplayedText = stripHtml(label.getText()).toLowerCase(); // i needed to strip html to clear the html tags in stringbuilder 
                                                                         //because it was interfering with my logic when matching random sentence and user entered sentences
 
-    // Split cleaned text into words
+    // splits text into words
     String[] correctWords = cleanedUserInput.split("\\s+");
     String[] labelWords = cleanedDisplayedText.split("\\s+"); // splits words by spaces used to match word to word
 
@@ -96,7 +96,7 @@ for (int i = 0; i < labelWords.length; i++) {
     }
 }
 
-// Count extra words in user input
+// count extra words in user input
 if (correctWords.length > labelWords.length) {
     for (int i = labelWords.length; i < correctWords.length; i++) {
         mistakes++;
@@ -128,7 +128,7 @@ public static String stripHtml(String html) {
     if (html == null) {
         return "";
     }
-    // Regex to remove all html tags
+    // regex to remove all html tags
     return html.replaceAll("<[^>]*>", "").trim();
 }
 
@@ -139,40 +139,43 @@ public static String stripHtml(String html) {
         System.out.println("ssjnksj");
           if (textPicked) {
         System.out.println("typingText() prevented: Already initialized.");
-        return label; // Return existing label
+        return label;
     }
-        String[] sentences = {
-    "the quick brown fox jumped over the lazy dog",
-    "the rain in spain falls mainly on the plain",
-    "time flies when youre having fun",
-    "to be or not to be that is the question",
-    "it always seems impossible until its done",
-    "dont count the days make the days count",
-    "you miss 100 of the shots you dont take",
-    "dreams dont work unless you do",
-    "the best revenge is massive success",
-    "if you can dream it you can achieve it",
-    "dont wait for the opportunity create it",
-    "believe you can and youre halfway there",
-    "make today amazing one step at a time",
-    "opportunities dont happen you create them",
-    "the future depends on what you do today",
-    "there is no substitute for hard work",
-    "stay positive work hard make it happen",
-    "every moment is a fresh beginning",
-    "you dont have to be great to start",
-    "happiness depends upon ourselves",
-    "you are stronger than you think",
-    "everything you can imagine is real",
-    "dream big and dare to fail",
-    "the purpose of life is not to be happy"
+ String[] sentences = {
+    "water pollution harms aquatic life every day",
+    "industries dump toxic waste into rivers and lakes",
+    "plastic debris fills oceans causing marine deaths",
+    "clean water is essential for a healthy population",
+    "fertilizers create algae blooms that suffocate fish",
+    "oil spills destroy ecosystems and coastal habitats",
+    "chemicals in water can poison plants and animals",
+    "save water by reducing pollution and waste today",
+    "oceans are choking under tons of floating plastic",
+    "contaminated water leads to disease and poor health",
+    "industrial runoff turns rivers into toxic wastelands",
+    "our actions today can save water for future generations",
+    "illegal dumping in water sources worsens pollution",
+    "clean rivers and lakes ensure balanced ecosystems",
+    "preserve water to sustain life on earth for all species",
+    "global water crisis stems from pollution and misuse",
+    "agriculture runoff contaminates fresh water supplies",
+    "toxic water kills ecosystems and affects livelihoods",
+    "oceans absorb pollutants and suffer biodiversity loss",
+    "humans need to act now to protect water resources",
+    "wastewater treatment is crucial to reduce pollution",
+    "climate change worsens water pollution every year",
+    "education can help reduce water pollution globally",
+    "our future depends on clean and healthy water systems"
 };
+
         Random random = new Random();
         int index = random.nextInt(sentences.length); // this picks a random sentence from the array
         label = new JLabel(sentences[index]); 
+        label.setFont(new Font("arial", Font.BOLD, 20));
+        label.setBounds(2200, 100, 900, 50);
         label.setForeground(Color.black);// this is the default color of the text that i will display from the above array
         textPicked = true;
-         System.out.println("Random sentence picked: " + sentences[index]);
+        System.out.println("Random sentence picked: " + sentences[index]);
         return label;
 
     }
@@ -195,24 +198,29 @@ public void loopTest() {
                .append("</span>");
     }
     newText.append("</html>");
-
-    label.setText(newText.toString()); // Update the label text
-    mp.getGameJPanel().add(label);
-    pressed = false; // Reset the pressed flag
+    JPanel gameJPanel = mp.getGameJPanel();
+    
+    label.setText(newText.toString()); // sets the new label text
     label.setFont(new Font("arial", Font.BOLD, 20));
-    label.setBounds(270, 100, 900, 50);
+    label.setBounds(220, 100, 900, 50);
+    mp.getGameJPanel().add(label);
+    
+    
     wpm = new JLabel("WPM: ");
-    wpm.setText("WPM: ");
+    numberOfWords = correctMatches * calcTimeForWpm;// calculates WPM   
+    wpm.setText("WPM: " + numberOfWords);
     mp.getGameJPanel().add(wpm);
-
+    
+    gameJPanel.revalidate();
+    gameJPanel.repaint();
 
 }
     
 public void timerButtons(){
     
-    TimerButtons text = new TimerButtons("Select your time below");
+    TimerButtons text = new TimerButtons("Select your time below");//timer buttons positions and sizes
     
-    TimerButtons ten = new TimerButtons("10");
+    TimerButtons ten = new TimerButtons("10");  // inherited from TimerButtons class
     TimerButtons twenty = new TimerButtons("20");
     TimerButtons thirty = new TimerButtons("30");
     
@@ -240,9 +248,10 @@ ten.addActionListener(new ActionListener() {
 
 twenty.addActionListener(new ActionListener() {
     @Override
-    public void actionPerformed(ActionEvent e) {
-        count = 20;
-        timer.stop();
+    public void actionPerformed(ActionEvent e) {// these are the buttons to change timer, 
+        count = 20; 
+        
+        timer.stop(); // when a timer is clicked it resets the timer to display the new timer
         timer.start();
         mp.requestFocusInWindow();
     }
@@ -283,7 +292,7 @@ public void keyTyped(KeyEvent e) {
     char key = e.getKeyChar();
     
     if(label == null || currentText == null) {
-        return; // Ensure label and currentText are initialized
+        return; // intilizes these variables if they werent already
     }
 
     if (userInput.length() < currentText.length()) {
@@ -299,18 +308,18 @@ public void keyTyped(KeyEvent e) {
         if (i < userInput.length()) {
             // Correctly typed character
             if (currentText.charAt(i) == userInput.charAt(i)) {
-                newText.append("<span style='color:green;'>")
+                newText.append("<span style='color:green;'>")//if it is correct, it appends the text interpretted as html in green
                        .append(currentText.charAt(i))
                        .append("</span>");
             } else {
                 newText.append("<span style='color:red;'>")
-                       .append(currentText.charAt(i))
+                       .append(currentText.charAt(i)) //if it is wrong, it appends the text interpretted as html in red
                        .append("</span>");
             }
         } else {
             newText.append("<span style='color:black;'>")
                    .append(currentText.charAt(i))
-                   .append("</span>");
+                   .append("</span>"); //and if the text hasnt been looped through yet, the text stays as black
         }
     }
     newText.append("</html>");
@@ -327,9 +336,10 @@ public void keyTyped(KeyEvent e) {
 public void keyPressed(KeyEvent e) {
     System.out.println("Key pressed: " + e.getKeyCode());
     if (e.getKeyCode() == KeyEvent.VK_TAB) {
+        wpm.setText("");//clears text when user skips test
         tempCount = count; // i created a simple formula to calculate wpm by setting a temp variaable to hold the timer value when tab is clicked(ends the typing test)
         calcTimeForWpm = 60/tempCount;// 60 is divided by the timer value to find the multiplier to calculate the wpm.
-        System.out.println("Tab key pressed. Triggering result processing."); //.. i used this method because i cant just multiply by 6 in a 10 second test 
+                                      //.. i used this method because i cant just multiply by 6 in a 10 second test 
                                                                               //if they finish the test early as results would be false. *6 would only work if they completed the full 10 seconds.
 
         String cleanedUserInput = stripHtml(userInput.toString().trim().toLowerCase());// i used this method to get rid of html tags when appending, i found this method online by researching and it works effectively
@@ -357,22 +367,19 @@ public void keyPressed(KeyEvent e) {
             }
         }
 
-        // Count extra words
+        // this count extra words
         if (correctWords.length > labelWords.length) {
             for (int i = labelWords.length; i < correctWords.length; i++) {
                 mistakes++;
-                System.out.println("Extra word at index " + i + ": " + correctWords[i]);
             }
         }
 
-        // Calculate WPM
-        if (correctMatches > 0) {
-            numberOfWords = correctMatches * calcTimeForWpm;
-        } else {
-            numberOfWords = 0;
-        }
+
+            numberOfWords = correctMatches * calcTimeForWpm;// calculates WPM
+        
             wpm.setText("WPM: " + numberOfWords);
             label.setText("");
+            userInput.setLength(0);
             loopTest();
             
     }
