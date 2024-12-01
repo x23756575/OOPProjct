@@ -68,13 +68,13 @@ public class TypingLogic implements KeyListener{
                 if (count <= 0) {
             ((Timer) e.getSource()).stop();
 
-String cleanedUserInput = stripHtml(userInput.toString()).toLowerCase(); 
-String cleanedDisplayedText = stripHtml(label.getText()).toLowerCase(); // i needed to strip html to clear the html tags in stringbuilder 
+    String cleanedUserInput = stripHtml(userInput.toString()).toLowerCase(); 
+    String cleanedDisplayedText = stripHtml(label.getText()).toLowerCase(); // i needed to strip html to clear the html tags in stringbuilder 
                                                                         //because it was interfering with my logic when matching random sentence and user entered sentences
 
-// Split cleaned text into words
-String[] correctWords = cleanedUserInput.split("\\s+");
-String[] labelWords = cleanedDisplayedText.split("\\s+"); // splits words by spaces used to match word to word
+    // Split cleaned text into words
+    String[] correctWords = cleanedUserInput.split("\\s+");
+    String[] labelWords = cleanedDisplayedText.split("\\s+"); // splits words by spaces used to match word to word
 
 
 
@@ -134,7 +134,7 @@ public static String stripHtml(String html) {
 
 
 
-    // Method to get a random sentence as JLabel
+    // method to get a random sentence as JLabel
     public JLabel typingText(){
         System.out.println("ssjnksj");
           if (textPicked) {
@@ -171,7 +171,8 @@ public static String stripHtml(String html) {
         int index = random.nextInt(sentences.length); // this picks a random sentence from the array
         label = new JLabel(sentences[index]); 
         label.setForeground(Color.black);// this is the default color of the text that i will display from the above array
-
+        textPicked = true;
+         System.out.println("Random sentence picked: " + sentences[index]);
         return label;
 
     }
@@ -202,7 +203,7 @@ public void loopTest() {
     label.setBounds(270, 100, 900, 50);
     wpm = new JLabel("WPM: ");
     wpm.setText("WPM: ");
-    mp.getGameJPanel().add(label);
+    mp.getGameJPanel().add(wpm);
 
 
 }
@@ -232,9 +233,8 @@ ten.addActionListener(new ActionListener() {
         count = 10;
         timer.stop();
         timer.start();
-        
-        // Request focus back to MainGUI
-        mp.requestFocusInWindow();
+
+        mp.requestFocusInWindow();// used to get focus from keyboard on the panel
     }
 });
 
@@ -244,8 +244,6 @@ twenty.addActionListener(new ActionListener() {
         count = 20;
         timer.stop();
         timer.start();
-        
-        // Request focus back to MainGUI
         mp.requestFocusInWindow();
     }
 });
@@ -256,8 +254,7 @@ thirty.addActionListener(new ActionListener() {
         count = 30;
         timer.stop();
         timer.start();
-        
-        // Request focus back to MainGUI
+      
         mp.requestFocusInWindow();
     }
 });
@@ -284,6 +281,10 @@ thirty.addActionListener(new ActionListener() {
 
 public void keyTyped(KeyEvent e) {
     char key = e.getKeyChar();
+    
+    if(label == null || currentText == null) {
+        return; // Ensure label and currentText are initialized
+    }
 
     if (userInput.length() < currentText.length()) {
         userInput.append(key);
@@ -314,7 +315,7 @@ public void keyTyped(KeyEvent e) {
     }
     newText.append("</html>");
 
-    label.setText(newText.toString());//sets the text to a label to be displayed
+   label.setText(newText.toString()) ;//sets the text to a label to be displayed
     timer.start();
 
 }
