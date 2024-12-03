@@ -18,7 +18,8 @@ public class TypingLogic implements KeyListener{
 
     private MainGUI mp;
     boolean pressed;
-    private int count = 10; 
+    private int count = 10;// this is the default timer so they can play when game starts without choosinga  #
+    private int constCount = count;
     private Timer timer;
     private String currentText; 
     private JLabel label;
@@ -41,7 +42,7 @@ public class TypingLogic implements KeyListener{
 
         JPanel gameJPanel = mp.getGameJPanel();
         mp.setFocusable(true);
-        mp.requestFocusInWindow(); //I added this as a test because keylistener was having problems.
+        mp.requestFocusInWindow(); //i added this as a test because keylistener was having problems.
         //I was able to figure setFocusable(true) was necessary as the gameJPanel needed focus form keybaord inputs
         mp.addKeyListener(this);
         mp.setFocusTraversalKeysEnabled(false);
@@ -66,6 +67,8 @@ public class TypingLogic implements KeyListener{
                 count--;
                 time.setText(String.valueOf(count));
                 if (count <= 0) {
+                    
+                    
             ((Timer) e.getSource()).stop();
 
     String cleanedUserInput = stripHtml(userInput.toString()).toLowerCase(); 
@@ -103,10 +106,10 @@ if (correctWords.length > labelWords.length) {
         System.out.println("Extra word at index " + i + ": " + correctWords[i]);
     }
 }
-//WPM
+calcWPM();
 
-    numberOfWords = correctMatches * 6;
-    System.out.println("WPM "+ numberOfWords);
+
+
 
 
 
@@ -182,13 +185,18 @@ public static String stripHtml(String html) {
     
     
 public void loopTest() {
-    System.out.println("loopTest method");// using this to debug a problem that causes text to change at the start
-    timer.stop(); // Stop the timer
-    count = 10;   // Reset the countdown
+    timer.stop();
+    wpm.setText("WPM: "+ numberOfWords);
+    constCount = count;
+    numberOfWords = 0;
+    tempCount = 0;
+    correctMatches = 0;
+    count = 10;
+    
     textPicked = false;
     currentText = typingText().getText(); // Get a new random sentence
     userInput.setLength(0); // Clear the user input
-
+    timer.start();
     // clear for next sentence
     newText.setLength(0);
     newText.append("<html>");
@@ -206,15 +214,14 @@ public void loopTest() {
     mp.getGameJPanel().add(label);
     
     
-    wpm = new JLabel("WPM: ");
-    numberOfWords = correctMatches * calcTimeForWpm;// calculates WPM   
-    wpm.setText("WPM: " + numberOfWords);
-    mp.getGameJPanel().add(wpm);
     
+
+
     gameJPanel.revalidate();
     gameJPanel.repaint();
-
+    System.out.println("WPM:"+ numberOfWords);
 }
+
     
 public void timerButtons(){
     
@@ -277,22 +284,34 @@ thirty.addActionListener(new ActionListener() {
     mp.getGameJPanel().repaint();
    
 }
+public void calcWPM(){
+    // Calculate the time in seconds
+    int timeTaken = constCount - count;
+
+    // Check if time taken is greater than 0 to avoid division by zero
+    if (timeTaken > 0) {
+    // Convert to minutes
+    double convertedTimeTaken = timeTaken / 60.0;
     
-    
-    
-    
-    
-    
-    
-    
-    
+   //calc wpm
+    numberOfWords = (int) (correctMatches / convertedTimeTaken);
+    }else {
+    // If timetaken is 0 set wpm to 0 and its impossible to be 0 on a teest
+    numberOfWords = 0;
+    }
+
+
+    wpm.setText("WPM: " + numberOfWords); //sets wpm tex
+
+}   
+   
 @Override
 
 public void keyTyped(KeyEvent e) {
     char key = e.getKeyChar();
     
     if(label == null || currentText == null) {
-        return; // intilizes these variables if they werent already
+        return; // intilizes these variables
     }
 
     if (userInput.length() < currentText.length()) {
@@ -333,15 +352,13 @@ public void keyTyped(KeyEvent e) {
         public void keyReleased(KeyEvent e) {//redundant but i have to have it here otherwise errors
         }
 @Override
+
 public void keyPressed(KeyEvent e) {
     System.out.println("Key pressed: " + e.getKeyCode());
+    //click tab to go to next test and show ur wpm for previous test
     if (e.getKeyCode() == KeyEvent.VK_TAB) {
-        wpm.setText("");//clears text when user skips test
-        tempCount = count; // i created a simple formula to calculate wpm by setting a temp variaable to hold the timer value when tab is clicked(ends the typing test)
-        calcTimeForWpm = 60/tempCount;// 60 is divided by the timer value to find the multiplier to calculate the wpm.
-                                      //.. i used this method because i cant just multiply by 6 in a 10 second test 
-                                                                              //if they finish the test early as results would be false. *6 would only work if they completed the full 10 seconds.
-
+      
+       
         String cleanedUserInput = stripHtml(userInput.toString().trim().toLowerCase());// i used this method to get rid of html tags when appending, i found this method online by researching and it works effectively
         String cleanedDisplayedText = stripHtml(currentText.trim().toLowerCase());
 
@@ -375,13 +392,15 @@ public void keyPressed(KeyEvent e) {
         }
 
 
-            numberOfWords = correctMatches * calcTimeForWpm;// calculates WPM
-        
-            wpm.setText("WPM: " + numberOfWords);
+    calcWPM();
+
+    wpm.setText("WPM: " + numberOfWords);
+
             label.setText("");
             userInput.setLength(0);
             loopTest();
-            
+    mp.getGameJPanel().revalidate();
+    mp.getGameJPanel().repaint();
     }
 }
 
