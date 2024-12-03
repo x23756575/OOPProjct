@@ -186,12 +186,14 @@ public static String stripHtml(String html) {
     
 public void loopTest() {
     timer.stop();
+    calcWPM();
     wpm.setText("WPM: "+ numberOfWords);
     constCount = count;
     numberOfWords = 0;
     tempCount = 0;
     correctMatches = 0;
     count = 10;
+    count = constCount;
     
     textPicked = false;
     currentText = typingText().getText(); // Get a new random sentence
@@ -213,10 +215,6 @@ public void loopTest() {
     label.setBounds(220, 100, 900, 50);
     mp.getGameJPanel().add(label);
     
-    
-    
-
-
     gameJPanel.revalidate();
     gameJPanel.repaint();
     System.out.println("WPM:"+ numberOfWords);
@@ -245,8 +243,9 @@ public void timerButtons(){
 ten.addActionListener(new ActionListener() {
     @Override
     public void actionPerformed(ActionEvent e) {
+        timer.stop(); // when a timer is clicked it resets the timer to display the new timer
         count = 10;
-        timer.stop();
+        constCount = count;        
         timer.start();
 
         mp.requestFocusInWindow();// used to get focus from keyboard on the panel
@@ -256,9 +255,10 @@ ten.addActionListener(new ActionListener() {
 twenty.addActionListener(new ActionListener() {
     @Override
     public void actionPerformed(ActionEvent e) {// these are the buttons to change timer, 
-        count = 20; 
-        
         timer.stop(); // when a timer is clicked it resets the timer to display the new timer
+
+        count = 20;
+        constCount = count;       
         timer.start();
         mp.requestFocusInWindow();
     }
@@ -267,8 +267,9 @@ twenty.addActionListener(new ActionListener() {
 thirty.addActionListener(new ActionListener() {
     @Override
     public void actionPerformed(ActionEvent e) {
+        timer.stop(); // when a timer is clicked it resets the timer to display the new timer        constCount = count;
         count = 30;
-        timer.stop();
+        constCount = count;
         timer.start();
       
         mp.requestFocusInWindow();
@@ -310,8 +311,14 @@ public void calcWPM(){
 public void keyTyped(KeyEvent e) {
     char key = e.getKeyChar();
     
+    if (key == '\t') {// i used this method to fix tab keys being shown as the first letter when skipping tests, when tab is detected it stops the code and moves onto the next letter
+        return;
+    }
+
+    
     if(label == null || currentText == null) {
-        return; // intilizes these variables
+        return; // code cant go further if theres arent initilized
+        //added this because of a nullpointer i ran into
     }
 
     if (userInput.length() < currentText.length()) {
