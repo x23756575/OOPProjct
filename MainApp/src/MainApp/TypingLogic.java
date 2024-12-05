@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Random;
 import javax.swing.JButton;
@@ -31,6 +33,8 @@ public class TypingLogic implements KeyListener{
     private int tempCount;
     private int calcTimeForWpm;
     private boolean textPicked = false;
+    private JLabel time;
+    private int test = 1;
 
     
     StringBuilder userInput = new StringBuilder();
@@ -185,21 +189,24 @@ public static String stripHtml(String html) {
     
     
 public void loopTest() {
-    timer.stop();
+
     calcWPM();
+    timer.stop();
+    
+
     wpm.setText("WPM: "+ numberOfWords);
-    constCount = count;
+    
+
+    count = constCount;
     numberOfWords = 0;
     tempCount = 0;
     correctMatches = 0;
-    count = 10;
-    count = constCount;
+
     
     textPicked = false;
-    currentText = typingText().getText(); // Get a new random sentence
+    currentText = typingText().getText();// Get a new random sentence
     userInput.setLength(0); // Clear the user input
     timer.start();
-    // clear for next sentence
     newText.setLength(0);
     newText.append("<html>");
     for (int i = 0; i < currentText.length(); i++) {
@@ -218,6 +225,21 @@ public void loopTest() {
     gameJPanel.revalidate();
     gameJPanel.repaint();
     System.out.println("WPM:"+ numberOfWords);
+}
+
+public void saveFile() {
+    String fileName = "wpmResultsTest" + test+ ".txt"; //did this to create a different file name for every test.test increments every time tab is pressed 
+    String wpmData = "Typing test: " + test + "\nWPM: " + numberOfWords + "\n";
+
+    try (FileOutputStream wpm = new FileOutputStream(fileName)) {
+        wpm.write(wpmData.getBytes());
+        System.out.println("WPM saved successfully to " + fileName);
+    } catch (IOException e) {
+        e.printStackTrace();
+        System.out.println("Error saving WPM data.");
+    }
+    test++;//used to know which test it is
+    //tab is to skip to the next test
 }
 
     
@@ -286,18 +308,18 @@ thirty.addActionListener(new ActionListener() {
    
 }
 public void calcWPM(){
-    // Calculate the time in seconds
+    // calcs the time in seconds
     int timeTaken = constCount - count;
 
-    // Check if time taken is greater than 0 to avoid division by zero
+    // checks if time taken is greater than 0 so calculation isnt bugged
     if (timeTaken > 0) {
-    // Convert to minutes
+    // converts to minutes
     double convertedTimeTaken = timeTaken / 60.0;
     
    //calc wpm
     numberOfWords = (int) (correctMatches / convertedTimeTaken);
     }else {
-    // If timetaken is 0 set wpm to 0 and its impossible to be 0 on a teest
+    // If timetaken is 0 set wpm to 0 and its impossible to be 0 on a test
     numberOfWords = 0;
     }
 
@@ -305,7 +327,7 @@ public void calcWPM(){
     wpm.setText("WPM: " + numberOfWords); //sets wpm tex
 
 }   
-   
+
 @Override
 
 public void keyTyped(KeyEvent e) {
@@ -318,7 +340,7 @@ public void keyTyped(KeyEvent e) {
     
     if(label == null || currentText == null) {
         return; // code cant go further if theres arent initilized
-        //added this because of a nullpointer i ran into
+                // added this because of a nullpointer i ran into
     }
 
     if (userInput.length() < currentText.length()) {
@@ -364,6 +386,7 @@ public void keyPressed(KeyEvent e) {
     System.out.println("Key pressed: " + e.getKeyCode());
     //click tab to go to next test and show ur wpm for previous test
     if (e.getKeyCode() == KeyEvent.VK_TAB) {
+
       
        
         String cleanedUserInput = stripHtml(userInput.toString().trim().toLowerCase());// i used this method to get rid of html tags when appending, i found this method online by researching and it works effectively
@@ -400,12 +423,12 @@ public void keyPressed(KeyEvent e) {
 
 
     calcWPM();
-
+    saveFile();
     wpm.setText("WPM: " + numberOfWords);
-
-            label.setText("");
-            userInput.setLength(0);
-            loopTest();
+    label.setText("");
+    userInput.setLength(0);
+    loopTest();
+    
     mp.getGameJPanel().revalidate();
     mp.getGameJPanel().repaint();
     }

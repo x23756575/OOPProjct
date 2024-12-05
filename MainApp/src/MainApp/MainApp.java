@@ -17,8 +17,6 @@ public class MainApp {
         // TODO code application logic here
         MainGUI gui = new MainGUI();
         TypingApp typingApp = new TypingApp(gui);
-
-
         gui.setVisible(true);
     }
      

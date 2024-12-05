@@ -69,6 +69,7 @@ public class TypingApp {
     }
 
     // method to set up the keyboard layout
+    //write plan for this before code
     private void keyboardLayout() {
         JPanel gameJPanel = mp.getGameJPanel();
 
