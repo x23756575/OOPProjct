@@ -22,7 +22,7 @@ public class InfoContent extends JPanel {
 
     public InfoContent() {
         setLayout(new BorderLayout());
-        setPreferredSize(new Dimension(900, 900)); 
+        setPreferredSize(new Dimension(900, 700)); 
 
         // Title label
         JLabel title = new JLabel("Life Below Water: The Oceans and Their Challenges", JLabel.CENTER);
@@ -134,5 +134,17 @@ public class InfoContent extends JPanel {
         } catch (Exception e) {
             imageLabel.setText("Error loading image.");
         }
+    }
+
+    void loadInfoFromFile() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    String getInfo() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    void setInfo(String text) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
