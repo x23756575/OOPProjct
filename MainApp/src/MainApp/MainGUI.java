@@ -6,6 +6,7 @@ package MainApp;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Image;
 import java.io.File;
 import javax.swing.ImageIcon;
@@ -19,20 +20,53 @@ import javax.swing.JPanel;
 
 public class MainGUI extends javax.swing.JFrame {
 
-    String fileName;
+String fileName;
+private JLabel header = new JLabel("Life Below Water");
+private JLabel infoSentence = new JLabel("<html>This is an information page talking about ocean warming, ocean pollution and overfishing and more.<br> Click on the icon to learn more about these important topics in further detail<html> ");
+private JLabel quizSentence = new JLabel("<html>This quiz is designed to explore the topic of overwarming. Challenge yourself <br>to test your understanding on over warming, and give an insight to this ongoing issue.<html>");
+private JLabel gameSentence = new JLabel("<html>Take this typing test to test your typing skills while learning about water pollution<html>");
+
+private JLabel infoHeader = new JLabel("Information Page");
+private JLabel quizHeader = new JLabel("Quiz Page");
+private JLabel gameHeader = new JLabel("Game Page");
+public MainGUI(){
     
-    
-   
-    
-    public MainGUI() {
-        initComponents();
+initComponents();
+
+header.setBounds(300,20,400,70);
+
+infoSentence.setBounds(300, 150,800,150);
+quizSentence.setBounds(110,120,500,500);
+gameSentence.setBounds(310,250,500,500);
+
+infoHeader.setBounds(450,100,800,150);
+quizHeader.setBounds(310,60,500,500);
+gameHeader.setBounds(470,200,500,500);
+
+infoHeader.setFont(new Font("arial", Font.BOLD, 25));
+quizHeader.setFont(new Font("arial", Font.BOLD, 25));
+gameHeader.setFont(new Font("arial", Font.BOLD, 25));
+
+header.setFont(new Font("arial", Font.BOLD, 40));
+
+mainJPanel.add(infoHeader);
+mainJPanel.add(quizHeader);
+mainJPanel.add(gameHeader);
+
+mainJPanel.add(header);
+
+mainJPanel.add(infoSentence);
+mainJPanel.add(quizSentence);
+mainJPanel.add(gameSentence);
+          
 // Set the layout to null for manual positioning
 mainJPanel.setLayout(null);
 
 // Set the size and position of the button
  // x, y, width, height
-quizBTN.setBounds(600,245, 150, 150);
+
 infoBTN.setBounds(140,100, 150, 150);
+quizBTN.setBounds(600,245, 150, 150);
 gameBTN.setBounds(140,390, 150, 150);
 
 // Load the image
