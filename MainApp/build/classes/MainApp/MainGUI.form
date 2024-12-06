@@ -115,6 +115,9 @@
             <Component class="javax.swing.JButton" name="gameBTN">
               <Properties>
                 <Property name="text" type="java.lang.String" value="GAME"/>
+                <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[350, 350]"/>
+                </Property>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="gameBTNActionPerformed"/>

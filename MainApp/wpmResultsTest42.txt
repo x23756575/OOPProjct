@@ -1,0 +1,2 @@
+Typing test: 42
+WPM: 0

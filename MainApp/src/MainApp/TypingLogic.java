@@ -179,7 +179,7 @@ public static String stripHtml(String html) {
         int index = random.nextInt(sentences.length); // this picks a random sentence from the array
         label = new JLabel(sentences[index]); 
         label.setFont(new Font("arial", Font.BOLD, 20));
-        label.setBounds(2200, 100, 900, 50);
+        label.setBounds(20, 100, 900, 50);
         label.setForeground(Color.black);// this is the default color of the text that i will display from the above array
         textPicked = true;
         System.out.println("Random sentence picked: " + sentences[index]);
