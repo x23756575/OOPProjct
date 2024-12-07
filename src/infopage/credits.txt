@@ -36,3 +36,11 @@ NOAA on Coral Bleaching: https://oceanservice.noaa.gov/facts/coral_bleaching.htm
 NASA on Sea Level Rise: https://climate.nasa.gov/vital-signs/sea-level/
 NOAA on Fish Populations: https://www.noaa.gov/education/resource-collections/marine-life/ocean-ecosystems
 National Hurricane Center on Extreme Weather: https://www.nhc.noaa.gov/aboutsshws.php
+
+
+CODE COURTESY
+The code was created by heavy influence from the slides on moodle, and some online sources:
+https://www.geeksforgeeks.org/
+https://www.w3schools.com/java/
+
+

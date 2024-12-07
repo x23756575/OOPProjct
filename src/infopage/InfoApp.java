@@ -1,130 +1,181 @@
 package MainApp;
+
 /**
  *
  * @author Blesson/Saboteur
  */
 
-// importing all the necessary files
+// importing neccessary packages
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
-public class InfoApp extends JPanel {
-    private MainGUI mp;
-    private InfoContent infoContent;
+public class InfoApp {
 
-    public InfoApp(MainGUI mp) {
-        this.mp = mp; // connecting MainGUI
-        setLayout(new BorderLayout());
-        infoContent = new InfoContent();
-        add(infoContent, BorderLayout.CENTER);
+    private MainGUI mainGui;
+    private JPanel infoPanel;
+    
+    //initializing Infoapp
+    public InfoApp(MainGUI mainGui) {
+        this.mainGui = mainGui;
+        this.infoPanel = mainGui.getInfoJPanel();
+        setupInfoPanel();
+    }
 
-        // Creating the bottom panel for buttons
+    private void setupInfoPanel() {
+        infoPanel.removeAll();
+        infoPanel.setLayout(new BorderLayout());
+
+        // Displaying the intro from InfoContent
+        JLabel introLabel = new JLabel(InfoContent.getIntroText());
+        introLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        introLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        infoPanel.add(introLabel, BorderLayout.NORTH);
+
+        // Main content panel with buttons
+        JPanel contentPanel = new JPanel();
+        contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
+
+        // Ocean Warming Button
+        JButton OWButton = new JButton("Learn about Ocean Warming");
+        OWButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        OWButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                showDetailedInfo("Ocean Warming");
+            }
+        });
+        contentPanel.add(OWButton);
+        contentPanel.add(Box.createVerticalStrut(10)); // for spacing
+
+        // Ocean Pollution Button
+        JButton OPButton = new JButton("Learn about Ocean Pollution");
+        OPButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        OPButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                showDetailedInfo("Ocean Pollution");
+            }
+        });
+        contentPanel.add(OPButton);
+        contentPanel.add(Box.createVerticalStrut(10));
+
+        // Credits Button
+        JButton creditsButton = new JButton("Show Credits");
+        creditsButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        creditsButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                showCredits();
+            }
+        });
+        contentPanel.add(creditsButton);
+
+        // Content panel to the centre
+        infoPanel.add(contentPanel, BorderLayout.CENTER);
+
+        // Back to Main Menu 
         JPanel bottomPanel = new JPanel();
-        bottomPanel.setLayout(new FlowLayout(FlowLayout.CENTER)); // center the buttons
-        JButton homeBtn = new JButton("Home");
-        JButton creditsBtn = new JButton("Credits");
-        homeBtn.setPreferredSize(new Dimension(150, 40));
-        creditsBtn.setPreferredSize(new Dimension(150, 40));
-        // referred to this website: https://stackoverflow.com/questions/53423090/trying-to-put-buttons-on-the-bottom-of-the-screen
-        
-        // ActionListeners for both buttons
-        homeBtn.addActionListener(new ActionListener() {
-            @Override
+        bottomPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+
+        JButton backToMenuButton = new JButton("Back to Main Menu");
+        backToMenuButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                try {
-                    System.out.println("Going to Home... Restarting app...");          
-                    //Restarting the main app, issue with back button so the workaround
-                    JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(homeBtn);
-                    frame.dispose();
-                    MainGUI.main(null);  
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
+                mainGui.showMainMenu(); 
             }
         });
+        bottomPanel.add(backToMenuButton);
+        infoPanel.add(bottomPanel, BorderLayout.SOUTH);
 
-        creditsBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("Loading credits...");
-
-                // Load the contents of the credits.txt file and display it
-                String creditsText = loadCredits();
-                infoContent.displayInfo(creditsText, null); // Passing null for image as it's not required here
-            }
-        });
-
-        //Positioning all Buttons
-        bottomPanel.add(homeBtn);
-        bottomPanel.add(creditsBtn);
-        add(bottomPanel, BorderLayout.SOUTH);
-        JPanel topicPanel = new JPanel();
-        topicPanel.setLayout(new GridLayout(3, 2));
-
-        
-        for (String topic : infoContent.getTopics().keySet()) {
-            JButton topicButton = new JButton(topic);
-            topicButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    System.out.println("Displaying information about " + topic);
-                    displayTopicInfo(topic);
-                }
-            });
-            topicPanel.add(topicButton);
-        }
-
-        add(topicPanel, BorderLayout.NORTH);
-    }
-
-    private void displayTopicInfo(String topic) {
-        // Dispaly info regartding the topics
-        String infoText = getTopicInfo(topic); // Fetch content
-        String imagePath = infoContent.getTopics().get(topic); 
-        infoContent.displayInfo(infoText, imagePath);
-    }
-
-    private String getTopicInfo(String topic) {
-        switch (topic) {
-            case "Ocean Pollution":
-                return InfoContent.getOceanPollutionInfo();
-
-            case "Ocean Warming":
-                return InfoContent.getOceanWarmingInfo();
-
-            default:
-                return "Information not available.";
-        }
+        infoPanel.revalidate(); // Revalidating to be safe
+        infoPanel.repaint();
     }
     
-    // Displaying info from credits file
-    private String loadCredits() {
-        StringBuilder creditsText = new StringBuilder();
+    // Display detailed information on topics
+    private void showDetailedInfo(String topic) {
+        JTextArea infoTextArea = new JTextArea();
+        infoTextArea.setEditable(false); // Avoiding edits
+        infoTextArea.setLineWrap(true);
+        infoTextArea.setWrapStyleWord(true);
 
-        try (BufferedReader reader = new BufferedReader(new FileReader("src/MainApp/credits.txt"))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                creditsText.append(line).append("\n");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            return "Error loading credits.";
+        String content = "";
+        if (topic.equals("Ocean Warming")) {
+            content = InfoContent.getOWContent();
+        } 
+        else if (topic.equals("Ocean Pollution")) {
+            content = InfoContent.getOPContent();
         }
 
-        return creditsText.toString();
+        infoTextArea.setText(content);
+
+        JScrollPane scrollPane = new JScrollPane(infoTextArea);
+        scrollPane.setPreferredSize(new Dimension(350, 200));
+
+        infoPanel.removeAll();
+        infoPanel.add(scrollPane, BorderLayout.CENTER);
+
+        JButton backButton = new JButton("Back");
+        backButton.addActionListener(e -> setupInfoPanel());
+
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.add(backButton);
+        infoPanel.add(bottomPanel, BorderLayout.SOUTH);
+
+        infoPanel.revalidate();
+        infoPanel.repaint();
     }
+    
+    // Displaying credits, first open the pane to display and then load data
+    private void showCredits() {
+        JTextArea creditsTextArea = new JTextArea();
+        creditsTextArea.setEditable(false);
+        creditsTextArea.setLineWrap(true);
+        creditsTextArea.setWrapStyleWord(true);
 
+        String creditsContent = loadCreditsFromFile();
+        creditsTextArea.setText(creditsContent);
 
-    private void showHomePage() {
-        System.out.println("Displaying Home Page...");
+        JScrollPane scrollPane = new JScrollPane(creditsTextArea);
+        scrollPane.setPreferredSize(new Dimension(350, 200));
 
+        infoPanel.removeAll();
+        infoPanel.add(scrollPane, BorderLayout.CENTER);
+
+        JButton backButton = new JButton("Back");
+        backButton.addActionListener(e -> setupInfoPanel());
+
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.add(backButton);
+        infoPanel.add(bottomPanel, BorderLayout.SOUTH);
+
+        infoPanel.revalidate();
+        infoPanel.repaint();
+    }
+    
+    // Load credits(data) from a text file 
+    private String loadCreditsFromFile() {
+        StringBuilder creditsContent = new StringBuilder();
+        try {
+            Path filePath = Paths.get("src/MainApp/credits.txt");
+            if (Files.exists(filePath)) {
+                Files.readAllLines(filePath).forEach(line -> creditsContent.append(line).append("\n"));
+            } 
+            else {
+                creditsContent.append("Credits file not found.");
+            }
+        } 
+        catch (IOException e) {
+        }
         
-        mp.showHomePage();
+        return creditsContent.toString();
     }
 }
-//END OF CODE
+
+// The code was created by heavy influence from the slides on moodle, and some online sources:
+// https://www.geeksforgeeks.org/
+// https://www.w3schools.com/java/
+
+

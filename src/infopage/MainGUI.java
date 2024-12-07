@@ -142,18 +142,16 @@ public class MainGUI extends javax.swing.JFrame {
     public JPanel getInfoJPanel(){
         return infoJPanel;
     }
-    public JPanel getMainPanel() {
-        return mainJPanel;
+    public void showMainMenu() {
+        // Hide all panels
+        infoJPanel.setVisible(false);
+        quizJPanel.setVisible(false);
+        gameJPanel.setVisible(false);
+
+        // Show the main menu
+        mainJPanel.setVisible(true);
     }
-    // Public method to show the home page
-    public void showHomePage() {
-        System.out.println("Switching to Home Page...");
-        // Switch to main/home panel
-        this.getContentPane().removeAll();
-        this.add(mainJPanel);  // Add the main panel back
-        this.revalidate();     // Revalidate the content
-        this.repaint();        // Repaint the UI to reflect the changes
-    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -340,33 +338,14 @@ public class MainGUI extends javax.swing.JFrame {
 
     private void infoBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_infoBTNActionPerformed
         // TODO add your handling code here:
-       // mainJPanel.setVisible(false);
-        //infoJPanel.setVisible(true);
-        InfoApp infoApp = new InfoApp(this);
-        infoJPanel.setLayout(new BorderLayout());
-
-        // Clear old content
-        infoJPanel.removeAll();
-
-        // Add the new InfoApp to the panel
-        infoJPanel.add(infoApp, BorderLayout.CENTER);
-
-        // Revalidate and repaint
-        infoJPanel.revalidate();
-        infoJPanel.repaint();
-
-        // Show the info panel
-        ((CardLayout) backgroundJPanel.getLayout()).show(backgroundJPanel, "card3");
-        backgroundJPanel.revalidate();
-        backgroundJPanel.repaint(); 
+        mainJPanel.setVisible(false);
+        infoJPanel.setVisible(true);
     }//GEN-LAST:event_infoBTNActionPerformed
 
     private void infobackBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_infobackBTNActionPerformed
         // TODO add your handling code here:
-        ((CardLayout) backgroundJPanel.getLayout()).show(backgroundJPanel, "card2");
-
-        //mainJPanel.setVisible(true);
-        //infoJPanel.setVisible(false);
+        mainJPanel.setVisible(true);
+        infoJPanel.setVisible(false);
         
     }//GEN-LAST:event_infobackBTNActionPerformed
 
