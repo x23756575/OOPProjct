@@ -11,12 +11,12 @@ package MainApp;
  */
 
 public class MainApp {
-
     public static void main(String[] args) {
         
         MainGUI gui = new MainGUI();
+        InfoApp infoApp = new InfoApp(gui);
         TypingApp typingApp = new TypingApp(gui);
         QuizApp quizApp = new QuizApp(gui);
-        gui.setVisible(true);  
+        gui.setVisible(true);       
     }
 }
