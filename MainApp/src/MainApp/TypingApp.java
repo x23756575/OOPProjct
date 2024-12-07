@@ -38,10 +38,13 @@ public class TypingApp {
         }
 
         JPanel gameJPanel = mp.getGameJPanel();
+        
         JLabel randomSentenceLabel = tl.typingText();
         randomSentenceLabel.setFont(new Font("arial", Font.BOLD, 20)); // set font for the random sentence
         randomSentenceLabel.setBounds(270, 100, 900, 50); // position the random sentence label
+        
         gameJPanel.add(randomSentenceLabel); // add random sentence label
+        
         keyboardLayout(); // create keyboard layout
     }
 
@@ -71,10 +74,16 @@ public class TypingApp {
     // method to set up the keyboard layout
     //write plan for this before code
     private void keyboardLayout() {
+        
+        
+
+
         JPanel gameJPanel = mp.getGameJPanel();
 
         gameJPanel.setLayout(null); // set layout to null for custom positioning
+        
 
+        
         int baseX = 150; // starting x position
         int baseY = 400; // starting y position
         int keySize = 50; // key width and height
@@ -88,10 +97,11 @@ public class TypingApp {
 
             for (int col = 0; col < keyboardLabels[row].length; col++) {
                 JLabel keyLabel = keyboardLabels[row][col];
-                int xPos = xStart + (col * spacingX); // the row starts at xStart at moves across each image in the row adding spacingX to change the x positon
+                int xPos = xStart + (col * spacingX); // the row starts at xStart and moves across each image in the row adding spacingX to change the x positon
 
                 keyLabel.setBounds(xPos, yPos, keySize, keySize); // set key position and size
                 gameJPanel.add(keyLabel);
+                
             }
         }
 
@@ -99,5 +109,11 @@ public class TypingApp {
 
         gameJPanel.revalidate(); // refresh the panel
         gameJPanel.repaint(); // repaint the panel
+        // Create the background label
+JLabel background = new JLabel(new ImageIcon("C:\\Users\\samor\\OneDrive\\Documents\\NetBeansProjects\\MainApp\\MainApp\\src\\MainApp\\Images\\bggg.png"));
+background.setBounds(100,350,700,250); // Full panel size
+
+// Add the background first
+gameJPanel.add(background);
     }
 }

@@ -127,7 +127,7 @@ mainJPanel.add(quizBTN);
 mainJPanel.add(infoBTN);
 
     mainJPanel.setBackground(new java.awt.Color(255, 255, 255));
-    gameJPanel.setBackground(new java.awt.Color(51, 204, 255));
+    gameJPanel.setBackground(new java.awt.Color(255, 255, 255));
     }
     public JPanel getGameJPanel() {
         return gameJPanel;

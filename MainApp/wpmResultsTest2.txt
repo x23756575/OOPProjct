@@ -1,2 +1,2 @@
 Typing test: 2
-WPM: 12
+WPM: 30

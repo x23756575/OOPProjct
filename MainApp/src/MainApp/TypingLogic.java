@@ -10,6 +10,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Random;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.Timer;
@@ -245,15 +246,17 @@ public void saveFile() {
     
 public void timerButtons(){
     
+    ImageIcon tenIcon = new ImageIcon("C:\\Users\\samor\\OneDrive\\Documents\\NetBeansProjects\\MainApp\\MainApp\\src\\MainApp\\Images\\number_10_resized.png");
+    ImageIcon twentyIcon = new ImageIcon("C:\\Users\\samor\\OneDrive\\Documents\\NetBeansProjects\\MainApp\\MainApp\\src\\MainApp\\Images\\number_20_resized.png");
+    ImageIcon thirtyIcon = new ImageIcon("C:\\Users\\samor\\OneDrive\\Documents\\NetBeansProjects\\MainApp\\MainApp\\src\\MainApp\\Images\\number_30_resized.png");
+    
     TimerButtons text = new TimerButtons("Select your time below");//timer buttons positions and sizes
     
-    TimerButtons ten = new TimerButtons("10");  // inherited from TimerButtons class
-    TimerButtons twenty = new TimerButtons("20");
-    TimerButtons thirty = new TimerButtons("30");
+    TimerButtons ten = new TimerButtons(tenIcon);  // inherited from TimerButtons class
+    TimerButtons twenty = new TimerButtons(twentyIcon);
+    TimerButtons thirty = new TimerButtons(thirtyIcon);
     
-    ten.setFont(new Font("arial", Font.BOLD,10));
-    twenty.setFont(new Font("arial", Font.BOLD, 10));
-    thirty.setFont(new Font("arial", Font.BOLD, 10));
+
     
     text.setPositionAndSize(350, 5, 170, 30);
     ten.setPositionAndSize(320,50,50,50);
