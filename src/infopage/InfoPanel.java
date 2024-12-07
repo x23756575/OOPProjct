@@ -5,23 +5,22 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-
-public class InfoApp extends JPanel {
-    private MainGUI mp;
+public class InfoPanel extends JPanel {
     private InfoContent infoContent;
 
-    // Constructor accepting MainGUI object
-    public InfoApp(MainGUI mp) {
-        this.mp = mp;
+    public InfoPanel() {
+        initComponents();
+    }
+
+    private void initComponents() {
         setLayout(new BorderLayout());
 
-        // Initialize InfoContent
         infoContent = new InfoContent();
         add(infoContent, BorderLayout.CENTER);
 
-        // Bottom Panel for buttons: Home and Back
+        // Panel for Bottom buttons: Home, Back
         JPanel bottomPanel = new JPanel();
-        bottomPanel.setLayout(new FlowLayout()); // Align buttons horizontally
+        bottomPanel.setLayout(new FlowLayout());  // Align buttons horizontally
         JButton homeBtn = new JButton("Home");
         JButton backBtn = new JButton("Back");
 
@@ -33,7 +32,7 @@ public class InfoApp extends JPanel {
         homeBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Going to Home..."); 
+                System.out.println("Navigating to MainApp (Home)..."); 
                 showHomePage();
             }
         });
@@ -41,9 +40,8 @@ public class InfoApp extends JPanel {
         backBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Going back...");
-                // Use the MainGUI's showHomePage() method to navigate back
-                mp.showHomePage();  // This will call the method in MainGUI to switch to the home page
+                System.out.println("Going back to Information Home...");
+                showInformationHomePage();
             }
         });
 
@@ -54,11 +52,10 @@ public class InfoApp extends JPanel {
         // Add the panel at the bottom of the frame
         add(bottomPanel, BorderLayout.SOUTH);
 
-        // Dynamically add topic buttons to the panel
+        // Adding buttons for topics dynamically
         JPanel topicPanel = new JPanel();
-        topicPanel.setLayout(new GridLayout(3, 2)); // Adjust layout depending on the number of topics
+        topicPanel.setLayout(new GridLayout(3, 2)); // Adjust the layout depending on the number of topics
 
-        // Example topics and their image paths
         for (String topic : infoContent.getTopics().keySet()) {
             JButton topicButton = new JButton(topic);
             topicButton.addActionListener(new ActionListener() {
@@ -82,9 +79,13 @@ public class InfoApp extends JPanel {
 
     private void showHomePage() {
         System.out.println("Displaying Home Page...");
+        // Code to show home page
+    }
 
-        // Use the existing showHomePage() method from MainGUI
-        mp.showHomePage();
+    private void showInformationHomePage() {
+        System.out.println("Displaying Information Home...");
+        // Reset content and show home page of the information
+        infoContent.getDisplayText().setText("Select a topic to learn more.");
+        infoContent.getImageLabel().setIcon(null);
     }
 }
-
