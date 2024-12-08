@@ -1,0 +1,46 @@
+INFORMATION SOURCES:
+
+Ocean Pollution:
+Sources of Ocean Pollution: Ocean pollution stems from various human activities, including land-based runoff, shipping, fishing, and industrial waste. Many sources mention that plastic waste is one of the biggest contributors to ocean pollution, accounting for over 80% of the total pollution in oceans. Source: National Oceanic and Atmospheric Administration (NOAA).
+
+Plastic Waste: The impact of plastic waste on marine life is well-documented. Plastics, such as bottles, bags, and microplastics, pose significant threats to marine species, as they can be ingested by fish, sea turtles, and marine mammals, which end up in the food chain. Source: Ocean Conservancy.
+
+Oil Pollution: Oil pollution is another major contributor to ocean contamination. Small oil spills from ships or oil rigs can have devastating effects on marine ecosystems, causing harm to birds, marine mammals, fish, and coral reefs. Source: United States Environmental Protection Agency (EPA).
+
+Chemicals and Heavy Metals: Industrial processes and agricultural runoff introduce chemicals and heavy metals into oceans, harming marine species and ecosystems. These pollutants disrupt reproductive cycles and immune systems in various marine life. Source: Environmental Protection Agency (EPA) on Pollutants.
+
+Global Cooperation for Addressing Pollution: Efforts to reduce ocean pollution include global cooperation to reduce plastic production, implement better waste management, and regulate industrial discharges. Global organizations and treaties aim to protect marine ecosystems. Source: United Nations Environment Programme (UNEP).
+
+Ocean Warming:
+Cause of Ocean Warming: Ocean warming is primarily driven by human-induced climate change, with oceans absorbing a large portion of heat from the atmosphere. This causes global ocean temperatures to rise, leading to widespread environmental consequences. Source: Intergovernmental Panel on Climate Change (IPCC).
+
+Coral Bleaching: Ocean warming leads to the bleaching of coral reefs. Warmer water temperatures cause corals to expel their symbiotic algae, which they rely on for color and nutrition. This makes them more susceptible to disease and death. Source: NOAA Coral Bleaching.
+
+Polar Ice Melting and Rising Sea Levels: As ocean temperatures rise, the polar ice caps and glaciers melt, contributing to rising sea levels. This results in coastal erosion and the loss of habitat for marine species. Source: National Aeronautics and Space Administration (NASA) on Sea Level Rise.
+
+Effect on Fish Populations: Warmer oceans impact fish migration and breeding patterns, disrupting food chains and affecting the availability of fish stocks. This not only affects ecosystems but also human communities that rely on fishing. Source: The National Oceanic and Atmospheric Administration (NOAA) on Fish Populations.
+
+Extreme Weather Events: Ocean warming is linked to the increased intensity of extreme weather events, including hurricanes, typhoons, and storms, as warm water feeds the energy of these storms. Source: National Hurricane Center.
+
+
+Resources used from these websites:
+https://www.whoi.edu/know-your-ocean/ocean-topics/
+NOAA on Ocean Pollution: https://oceanservice.noaa.gov/facts/oceanpollution.html
+Ocean Conservancy on Plastic Pollution: https://oceanconservancy.org/trash-free-seas/plastics-in-the-ocean/
+EPA on Oil Pollution: https://www.epa.gov/oil-spills-prevention-and-preparedness-regulations
+EPA on Pollutants: https://www.epa.gov/region1/eco/ozonedepletion/pollution
+UNEP on Plastic Pollution Governance: https://www.unep.org/resources/report/plastic-pollution-global-governance-review
+
+IPCC on Ocean Warming: https://www.ipcc.ch/sr15/chapter/chapter-3/
+NOAA on Coral Bleaching: https://oceanservice.noaa.gov/facts/coral_bleaching.html
+NASA on Sea Level Rise: https://climate.nasa.gov/vital-signs/sea-level/
+NOAA on Fish Populations: https://www.noaa.gov/education/resource-collections/marine-life/ocean-ecosystems
+National Hurricane Center on Extreme Weather: https://www.nhc.noaa.gov/aboutsshws.php
+
+
+CODE COURTESY
+The code was created by heavy influence from the slides on moodle, and some online sources:
+https://www.geeksforgeeks.org/
+https://www.w3schools.com/java/
+
+

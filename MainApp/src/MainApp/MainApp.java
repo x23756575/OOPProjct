@@ -18,6 +18,7 @@ public class MainApp {
         MainGUI gui = new MainGUI();
         TypingApp typingApp = new TypingApp(gui);
         QuizApp quizApp = new QuizApp(gui);
+        InfoApp infoApp = new InfoApp(gui);
         gui.setVisible(true);
     }
      
