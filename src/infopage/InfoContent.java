@@ -2,13 +2,13 @@ package MainApp;
 
 /**
  *
- * @author Blesson/Saboteur
+ * @author Blesson/Saboteur 
  */
 
-// This class was created to make it easy to edit content, instead of having to jiggle through the code
+// This class was created to make it easy to edit content, instead of having to jiggle through the code 
 
 public class InfoContent {
-    // Static content for Ocean Pollution
+    // Static content for Ocean Pollution 
     public static String getOPContent() {
         return "Ocean pollution refers to the contamination of the oceans by harmful substances, primarily from human activities. "
                 + "This pollution can come from a variety of sources, including land-based runoff, shipping, fishing activities, "
@@ -39,12 +39,12 @@ public class InfoContent {
                 + "These storms gain strength from warm ocean waters and can lead to severe flooding and damage to coastal regions.";
     }
 
-    // Introductory Text
-    public static String getIntroText() {
+    // Introductory Text 
+    public static String getIntroText() { 
         return "Welcome to Life Below Water \n" +"\n";
     }
 }
 
 // The code was created by heavy influence from the slides on moodle, and some online sources:
-// https://www.geeksforgeeks.org/
+// https://www.geeksforgeeks.org/ 
 // https://www.w3schools.com/java/
