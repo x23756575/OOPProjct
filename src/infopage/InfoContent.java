@@ -41,7 +41,7 @@ public class InfoContent {
 
     // Introductory Text
     public static String getIntroText() {
-        return "Welcome to Life Below Water \n" +" \n ";
+        return "Welcome to Life Below Water \n" +"\n";
     }
 }
 

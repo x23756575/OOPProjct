@@ -147,7 +147,6 @@ public class MainGUI extends javax.swing.JFrame {
         infoJPanel.setVisible(false);
         quizJPanel.setVisible(false);
         gameJPanel.setVisible(false);
-
         // Show the main menu
         mainJPanel.setVisible(true);
     }
@@ -422,7 +421,5 @@ public class MainGUI extends javax.swing.JFrame {
     private javax.swing.JPanel quizJPanel;
     private javax.swing.JButton quizbackBTN;
     // End of variables declaration//GEN-END:variables
-
-    
 
 }
