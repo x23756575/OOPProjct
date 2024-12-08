@@ -14,7 +14,6 @@ public class MainApp {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
         MainGUI gui = new MainGUI();
         TypingApp typingApp = new TypingApp(gui);
         QuizApp quizApp = new QuizApp(gui);
